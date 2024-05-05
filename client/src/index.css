@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* NAVBAR */
+.navBg {
+    background: rgb(2, 0, 36);
+    background: linear-gradient(150deg, rgba(2, 0, 36, 1) 54%, rgba(0, 212, 255, 1) 58%, rgba(2, 0, 36, 1) 62%);
+}
+
+.sidebar {
+    background: rgb(2, 2, 38);
+    background: linear-gradient(150deg, rgba(2, 2, 38, 1) 9%, rgba(0, 212, 255, 0.8465511204481793) 12%, rgba(2, 0, 36, 1) 15%, rgba(2, 12, 49, 1) 90%, rgba(0, 212, 255, 0.8465511204481793) 93%, rgba(2, 9, 46, 1) 96%);
+}
