@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import express from "express";
 import connectMongoDb from "./db/connectMongoDB.js";
 import authRouter from "./routes/auth.js";
+import notificationRouter from "./routes/notification.js";
 import postRouter from "./routes/post.js";
 import userRouter from "./routes/user.js";
 
@@ -23,6 +24,7 @@ app.use(cookieParser()); // Parsing request to get cookies
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
+app.use("/api/notifications", notificationRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
