@@ -8,4 +8,7 @@ export default {
     extend: {},
   },
   plugins: [],
+  server: {
+    port: 3000,
+  }
 }
