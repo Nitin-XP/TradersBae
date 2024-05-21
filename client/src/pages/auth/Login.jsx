@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { XSvg, logo } from "../../components/svgs/X";
+import { logo } from "../../components/svgs/X";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import { MdOutlineMail, MdPassword } from "react-icons/md";
 
 const LoginPage = () => {
@@ -11,16 +13,45 @@ const LoginPage = () => {
         password: "",
     });
 
+    const queryClient = useQueryClient();
+
+    const { mutate: loginMutation, isError, isPending, error } = useMutation({
+        mutationFn: async ({ username, password }) => {
+
+            try {
+                const res = await axios.post("http://localhost:8000/api/auth/login", {
+                    username,
+                    password
+                }, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                });
+                const data = await res.data;
+
+                if (res.status !== 200) throw new Error(data.error || "Failed to Login!");
+                return data;
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
+        },
+        onSuccess: () => {
+            // Refetch the AuthUser
+            // toast.success("LoggedIn Successfully!");
+            queryClient.invalidateQueries({ queryKey: ['authUser'] });
+            console.log(queryKey)
+        },
+    });
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
+        loginMutation(formData);
     };
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
-    const isError = false;
 
     return (
         <div className='max-w-screen-xl mx-auto flex h-screen'>
@@ -29,7 +60,7 @@ const LoginPage = () => {
             </div>
             <div className='flex-1 flex flex-col justify-center items-center'>
                 <form className='flex gap-4 flex-col' onSubmit={handleSubmit}>
-                    <XSvg className='w-24 lg:hidden fill-white' />
+                    <img src={logo} className='w-24 lg:hidden fill-white' />
                     <h1 className='text-4xl font-extrabold text-white'>{"Let's"} go.</h1>
                     <label className='input input-bordered rounded flex items-center gap-2'>
                         <MdOutlineMail />
@@ -54,7 +85,9 @@ const LoginPage = () => {
                             value={formData.password}
                         />
                     </label>
-                    <button className='btn rounded-full btn-primary text-secondary'>Login</button>
+                    <button className='btn rounded-full btn-primary text-secondary'>
+                        {isPending ? "Loading..." : "Login"}
+                    </button>
                     {isError && <p className='text-red-500'>Something went wrong</p>}
                 </form>
                 <div className='flex flex-col gap-2 mt-4'>

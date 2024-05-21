@@ -53,6 +53,7 @@ export const signup = async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error." });
+        console.log(error);
     }
 }
 export const login = async (req, res) => {
@@ -65,9 +66,10 @@ export const login = async (req, res) => {
             return res.status(400).json({ error: "Invalid Username or Password!" });
         }
         generateTokenAndSetCookie(user._id, res);
+
         res.status(200).json({
             _id: user._id,
-            fullname: user.fullname,
+            fullName: user.fullName,
             username: user.username,
             email: user.email,
             followers: user.followers,
@@ -76,6 +78,7 @@ export const login = async (req, res) => {
             coverImg: user.coverImg,
         });
     } catch (error) {
+        console.log(`Error in Login Controller : `, error.message, res);
         res.status(500).json({ error: "Internal Server Error." });
     }
 }
