@@ -1,21 +1,50 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { BiRepost } from "react-icons/bi";
 import { FaRegComment, FaRegHeart, FaTrash } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "./LoadSpinner";
 
 const Post = ({ post }) => {
     const [comment, setComment] = useState("");
+
+    const { data: authUser } = useQuery({ queryKey: ['authUser'] });
+    const queryClient = useQueryClient();
+
+    const { mutate: deletePost, isPending } = useMutation({
+        mutationFn: async () => {
+            try {
+                const res = await axios.post(`http://localhost:8000/api/posts/${post._id}`);
+                const data = res.data;
+
+                if (res.status !== 200) throw new Error(data.error || "Something Went Wrong!!");
+                return data;
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        onSuccess: () => {
+            toast.success("Post Deleted Successfully!!");
+            // Invalidating query to refetch data
+            queryClient.invalidateQueries({ queryKey: ['posts'] });
+        }
+    })
+
     const postOwner = post.user;
     const isLiked = false;
 
-    const isMyPost = true;
+    const isMyPost = authUser._id === post.user._id;
 
     const formattedDate = "1h";
 
     const isCommenting = false;
 
-    const handleDeletePost = () => { };
+    const handleDeletePost = () => {
+        deletePost();
+    };
 
     const handlePostComment = (e) => {
         e.preventDefault();
@@ -33,22 +62,25 @@ const Post = ({ post }) => {
                 </div>
                 <div className='flex flex-col flex-1'>
                     <div className='flex gap-2 items-center'>
-                        <Link to={`/profile/${postOwner.username}`} className='font-bold'>
-                            {postOwner.fullName}
+                        <Link to={`/profile/${postOwner.username}`} className='font-bold text-yellow-400'>
+                            {postOwner.fullname}
                         </Link>
-                        <span className='text-gray-700 flex gap-1 text-sm'>
+                        <span className=' text-yellow-400 flex gap-1 text-sm'>
                             <Link to={`/profile/${postOwner.username}`}>@{postOwner.username}</Link>
                             <span>·</span>
                             <span>{formattedDate}</span>
                         </span>
                         {isMyPost && (
                             <span className='flex justify-end flex-1'>
-                                <FaTrash className='cursor-pointer hover:text-red-500' onClick={handleDeletePost} />
+                                {!isPending && <FaTrash className='cursor-pointer text-primary hover:text-red-500' onClick={handleDeletePost} />}
+                                {isPending && (
+                                    <LoadingSpinner size="md" />
+                                )}
                             </span>
                         )}
                     </div>
                     <div className='flex flex-col gap-3 overflow-hidden'>
-                        <span>{post.text}</span>
+                        <span className=" text-primary">{post.text}</span>
                         {post.img && (
                             <img
                                 src={post.img}
@@ -89,12 +121,12 @@ const Post = ({ post }) => {
                                                 </div>
                                                 <div className='flex flex-col'>
                                                     <div className='flex items-center gap-1'>
-                                                        <span className='font-bold'>{comment.user.fullName}</span>
-                                                        <span className='text-gray-700 text-sm'>
+                                                        <span className='font-bold text-yellow-300'>{comment.user.fullname}</span>
+                                                        <span className='text-yellow-700 text-sm'>
                                                             @{comment.user.username}
                                                         </span>
                                                     </div>
-                                                    <div className='text-sm'>{comment.text}</div>
+                                                    <div className='text-sm text-primary'>{comment.text}</div>
                                                 </div>
                                             </div>
                                         ))}
@@ -109,7 +141,7 @@ const Post = ({ post }) => {
                                             value={comment}
                                             onChange={(e) => setComment(e.target.value)}
                                         />
-                                        <button className='btn btn-primary rounded-full btn-sm text-white px-4'>
+                                        <button className='btn btn-primary rounded-full btn-sm text-black px-4'>
                                             {isCommenting ? (
                                                 <span className='loading loading-spinner loading-md'></span>
                                             ) : (

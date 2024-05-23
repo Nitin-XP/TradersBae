@@ -59,10 +59,10 @@ function App() {
             <Route path="/profile/:id" element={<React.Suspense >{!authUser ? <Navigate to="/login" /> : <LazyProfilePage />}</React.Suspense>} />
             <Route path="*" element={<>Not Found</>} />
           </Routes>
-          <RightPanel />
+          {authUser && <RightPanel />}
+          {/* <RightPanel /> */}
           <Toaster />
         </div>
-        {authUser && <RightPanel />}
       </BrowserRouter>
     </>
   )
