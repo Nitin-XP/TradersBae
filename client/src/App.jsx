@@ -56,7 +56,7 @@ function App() {
             <Route path='/signup' element={<React.Suspense >{!authUser ? <LazySignUp /> : <Navigate to='/' />}</React.Suspense>} />
 
             <Route path="/notifications" element={<React.Suspense >{!authUser ? <Navigate to="/login" /> : <LazyNotification />}</React.Suspense>} />
-            <Route path="/profile/:id" element={<React.Suspense >{!authUser ? <Navigate to="/login" /> : <LazyProfilePage />}</React.Suspense>} />
+            <Route path="/profile/:username" element={<React.Suspense >{!authUser ? <Navigate to="/login" /> : <LazyProfilePage />}</React.Suspense>} />
             <Route path="*" element={<>Not Found</>} />
           </Routes>
           {authUser && <RightPanel />}

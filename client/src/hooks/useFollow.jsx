@@ -8,6 +8,7 @@ const useFollow = () => {
     const { mutate: follow, isPending } = useMutation({
         mutationFn: async ({ userId }) => {
             try {
+                console.log(userId)
                 const res = await axios.post(`http://localhost:8000/api/users/follow/${userId}`);
                 const data = res.data;
 

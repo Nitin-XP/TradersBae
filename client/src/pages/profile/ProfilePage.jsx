@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 import Posts from "../../components/common/Posts";
 import ProfileHeaderSkeleton from "../../components/skeletons/ProfileHeaderSkeleton";
@@ -7,10 +7,15 @@ import EditProfileModal from "./EditProfileModal";
 
 import { POSTS } from "../../utils/db/dummy";
 
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import toast from "react-hot-toast";
 import { FaLink } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
+import useFollow from "../../hooks/useFollow";
+import { formatMemberSinceDate } from "../../utils/date";
 
 const ProfilePage = () => {
     const [coverImg, setCoverImg] = useState(null);
@@ -20,20 +25,56 @@ const ProfilePage = () => {
     const coverImgRef = useRef(null);
     const profileImgRef = useRef(null);
 
-    const isLoading = false;
-    const isMyProfile = true;
+    const queryClient = useQueryClient();
 
-    const user = {
-        _id: "1",
-        fullName: "John Doe",
-        username: "johndoe",
-        profileImg: "/avatars/boy2.png",
-        coverImg: "/cover.png",
-        bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        link: "https://youtube.com/@asaprogrammer_",
-        following: ["1", "2", "3"],
-        followers: ["1", "2", "3"],
-    };
+    const { username } = useParams(); // Passed in app.jsx /:username
+
+    const { follow, isPending } = useFollow();
+
+    const { data: user, isLoading, refetch, isRefetching } = useQuery({
+        queryKey: ['userProfile'],
+        queryFn: async () => {
+            try {
+                const res = await axios.get(`http://localhost:8000/api/users/profile/${username}`);
+                const data = res.data;
+                if (res.status !== 200) throw new Error(data.error || `Something Went Wrong!`);
+                return data;
+            } catch (error) {
+                throw new Error(error);
+            }
+        }
+    });
+
+    const { mutate: updateProfile, isPending: isUpdatingProfile } = useMutation({
+        mutationFn: async () => {
+            try {
+                const res = await axios.post(`http://localhost:8000/api/users/update/`, { coverImg, profileImg });
+                const data = res.data;
+
+                if (res.status !== 200) throw new Error(data.error || `Something Went Wrong!`);
+                return data;
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        onSuccess: () => {
+            toast.success("Profile Updated Succefully!!");
+            queryClient.invalidateQueries({ queryKey: ['authUser'] });
+            queryClient.invalidateQueries({ queryKey: ['userProfile'] });
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        }
+    });
+
+    const { data: authUser } = useQuery({ queryKey: ['authUser'] })
+    const isMyProfile = authUser._id === user?._id;
+
+    const amIFollowing = authUser?.following.includes(user?._id);
+
+    useEffect(() => {
+        refetch();
+    }, [username, refetch]);
 
     const handleImgChange = (e, state) => {
         const file = e.target.files[0];
@@ -47,21 +88,22 @@ const ProfilePage = () => {
         }
     };
 
+
     return (
         <>
             <div className='flex-[4_4_0]  border-r border-secondary min-h-screen '>
                 {/* HEADER */}
-                {isLoading && <ProfileHeaderSkeleton />}
-                {!isLoading && !user && <p className='text-center text-lg mt-4'>User not found</p>}
+                {isLoading && !isRefetching && <ProfileHeaderSkeleton />}
+                {!isLoading && !isRefetching && !user && <p className='text-center text-lg mt-4'>User not found</p>}
                 <div className='flex flex-col'>
-                    {!isLoading && user && (
+                    {!isLoading && !isRefetching && user && (
                         <>
                             <div className='flex gap-10 px-4 py-2 items-center'>
                                 <Link to='/'>
                                     <FaArrowLeft className='w-4 h-4' />
                                 </Link>
                                 <div className='flex flex-col'>
-                                    <p className='font-bold text-lg'>{user?.fullName}</p>
+                                    <p className='font-bold text-lg text-primary'>{user?.fullname}</p>
                                     <span className='text-sm text-primary'>{POSTS?.length} posts</span>
                                 </div>
                             </div>
@@ -102,7 +144,7 @@ const ProfilePage = () => {
                                         <div className='absolute top-5 right-3 p-1 bg-primary rounded-full group-hover/avatar:opacity-100 opacity-0 cursor-pointer'>
                                             {isMyProfile && (
                                                 <MdEdit
-                                                    className='w-4 h-4 text-white'
+                                                    className='w-4 h-4 text-black'
                                                     onClick={() => profileImgRef.current.click()}
                                                 />
                                             )}
@@ -111,28 +153,30 @@ const ProfilePage = () => {
                                 </div>
                             </div>
                             <div className='flex justify-end px-4 mt-5'>
-                                {isMyProfile && <EditProfileModal />}
+                                {isMyProfile && <EditProfileModal authUser={authUser} />}
                                 {!isMyProfile && (
                                     <button
                                         className='btn btn-outline rounded-full btn-sm'
-                                        onClick={() => alert("Followed successfully")}
+                                        onClick={() => follow({ userId: user?._id, username: user?.username, fullname: user?.fullname })}
                                     >
-                                        Follow
+                                        {isPending && "Loading..."}
+                                        {!isPending && amIFollowing && "Unfollow"}
+                                        {!isPending && !amIFollowing && "Follow"}
                                     </button>
                                 )}
                                 {(coverImg || profileImg) && (
                                     <button
-                                        className='btn btn-primary rounded-full btn-sm text-white px-4 ml-2'
-                                        onClick={() => alert("Profile updated successfully")}
+                                        className='btn btn-primary rounded-full btn-sm text-black px-4 ml-2'
+                                        onClick={() => updateProfile()}
                                     >
-                                        Update
+                                        {isUpdatingProfile ? "Updating..." : "Update"}
                                     </button>
                                 )}
                             </div>
 
                             <div className='flex flex-col gap-4 mt-14 px-4'>
                                 <div className='flex flex-col text-primary'>
-                                    <span className='font-bold text-lg'>{user?.fullName}</span>
+                                    <span className='font-bold text-lg'>{user?.fullname}</span>
                                     <span className='text-sm'>@{user?.username}</span>
                                     <span className='text-sm my-1'>{user?.bio}</span>
                                 </div>
@@ -143,19 +187,19 @@ const ProfilePage = () => {
                                             <>
                                                 <FaLink className='w-3 h-3 text-primary' />
                                                 <a
-                                                    href='https://youtube.com/@asaprogrammer_'
+                                                    href={user.link}
                                                     target='_blank'
                                                     rel='noreferrer'
                                                     className='text-sm text-blue-500 hover:underline'
                                                 >
-                                                    youtube.com/@asaprogrammer_
+                                                    {user.link}
                                                 </a>
                                             </>
                                         </div>
                                     )}
                                     <div className='flex gap-2 items-center'>
                                         <IoCalendarOutline className='w-4 h-4 text-primary' />
-                                        <span className='text-sm text-primary'>Joined July 2021</span>
+                                        <span className='text-sm text-primary'>{formatMemberSinceDate(user?.createdAt)} </span>
                                     </div>
                                 </div>
                                 <div className='flex gap-2'>
@@ -192,7 +236,7 @@ const ProfilePage = () => {
                         </>
                     )}
 
-                    <Posts />
+                    <Posts feedType={feedType} username={username} userId={user?._id} />
                 </div>
             </div>
         </>
