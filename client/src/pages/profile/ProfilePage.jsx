@@ -7,14 +7,14 @@ import EditProfileModal from "./EditProfileModal";
 
 import { POSTS } from "../../utils/db/dummy";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import toast from "react-hot-toast";
 import { FaLink } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
 import useFollow from "../../hooks/useFollow";
+import useUpdateUserProfile from "../../hooks/useUpdateUserProfile";
 import { formatMemberSinceDate } from "../../utils/date";
 
 const ProfilePage = () => {
@@ -45,27 +45,7 @@ const ProfilePage = () => {
         }
     });
 
-    const { mutate: updateProfile, isPending: isUpdatingProfile } = useMutation({
-        mutationFn: async () => {
-            try {
-                const res = await axios.post(`http://localhost:8000/api/users/update/`, { coverImg, profileImg });
-                const data = res.data;
-
-                if (res.status !== 200) throw new Error(data.error || `Something Went Wrong!`);
-                return data;
-            } catch (error) {
-                throw new Error(error);
-            }
-        },
-        onSuccess: () => {
-            toast.success("Profile Updated Succefully!!");
-            queryClient.invalidateQueries({ queryKey: ['authUser'] });
-            queryClient.invalidateQueries({ queryKey: ['userProfile'] });
-        },
-        onError: (error) => {
-            toast.error(error.message);
-        }
-    });
+    const { isUpdatingProfile, updateProfile } = useUpdateUserProfile();
 
     const { data: authUser } = useQuery({ queryKey: ['authUser'] })
     const isMyProfile = authUser._id === user?._id;
@@ -167,7 +147,11 @@ const ProfilePage = () => {
                                 {(coverImg || profileImg) && (
                                     <button
                                         className='btn btn-primary rounded-full btn-sm text-black px-4 ml-2'
-                                        onClick={() => updateProfile()}
+                                        onClick={async () => {
+                                            await updateProfile({ coverImg, profileImg });
+                                            setCoverImg(null);
+                                            setProfileImg(null);
+                                        }}
                                     >
                                         {isUpdatingProfile ? "Updating..." : "Update"}
                                     </button>

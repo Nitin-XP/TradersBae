@@ -1,7 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import useUpdateUserProfile from "../../hooks/useUpdateUserProfile";
 
 const EditProfileModal = ({ authUser }) => {
     const queryClient = useQueryClient();
@@ -15,47 +14,7 @@ const EditProfileModal = ({ authUser }) => {
         currentPassword: "",
     });
 
-    const { mutate: updateProfile, isPending: isUpdatingProfile } = useMutation({
-        mutationFn: async () => {
-            try {
-                console.log(formData)
-                const res = await axios.post(`http://localhost:8000/api/users/update`, formData, {
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    }
-                });
-
-                const data = res.data;
-
-                if (res.status !== 200) throw new Error(data.error || `Something Went Wrong!`);
-                return data;
-            } catch (error) {
-                throw new Error(error);
-            }
-        },
-        onSuccess: (data) => {
-            toast.success("Profile Updated Successfully!!");
-            Promise.all([
-                queryClient.invalidateQueries({ queryKey: ['authUser'] }),
-                queryClient.invalidateQueries({ queryKey: ['userProfile'] }),
-            ])
-
-            // Update formData with the response data
-            setFormData({
-                fullname: data.fullname,
-                username: data.username,
-                email: data.email,
-                bio: data.bio,
-                link: data.link,
-                newPassword: "",
-                currentPassword: "",
-            });
-
-        },
-        onError: (error) => {
-            toast.error(error.message);
-        }
-    });
+    const { updateProfile, isUpdatingProfile } = useUpdateUserProfile();
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -63,7 +22,7 @@ const EditProfileModal = ({ authUser }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        updateProfile();
+        updateProfile(formData);
     }
     useEffect(() => {
         if (authUser) {
