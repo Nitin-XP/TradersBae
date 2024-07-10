@@ -48,7 +48,7 @@ function App() {
     <>
       <BrowserRouter>
         {/* <Navbar /> */}
-        <div className="flex max-w-6xl mx-auto">
+        <div className="flex max-w-6xl mx-auto bg-slate-100">
           {authUser && <Sidebar />}
           <Routes>
             <Route path='/' element={<React.Suspense >{authUser ? <LazyHome /> : <Navigate to='/login' />}</React.Suspense>} />

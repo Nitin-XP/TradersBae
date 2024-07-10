@@ -11,11 +11,11 @@ export default {
   plugins: [require("daisyui")],
   daisyui: {
     themes: ["winter", {
-      luxury: {
-        ...daisyUIThemes["luxury"],
-        primary: "fffdb6",
-        secondary: "2e2d04",
+      lofi: {
+        ...daisyUIThemes["lofi"],
+        primary: "000000",
+        secondary: "FFFFFF",
       },
-    }, "lofi",],
+    }, "luxury",],
   },
 }
