@@ -24,8 +24,8 @@ const corsOpts = {
 }
 app.use(cors(corsOpts))
 
-app.use(express.json());  // parsing req.body -> json
-app.use(express.urlencoded({ extended: true })); // Parses formdata
+app.use(express.json({ limit: '10mb' }));  // parsing req.body -> json
+app.use(express.urlencoded({ limit: '10mb', extended: true })); // Parses formdata
 
 app.use(cookieParser()); // Parsing request to get cookies
 

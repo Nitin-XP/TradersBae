@@ -9,6 +9,9 @@ import { IoCloseSharp } from "react-icons/io5";
 const CreatePost = () => {
     const [text, setText] = useState("");
     const [img, setImg] = useState(null);
+
+    const [emojiClicked, setEmojiClicked] = useState(false);
+
     const imgRef = useRef(null);
 
     const { data: authUser } = useQuery({ queryKey: ['authUser'] });
@@ -53,7 +56,7 @@ const CreatePost = () => {
     };
 
     return (
-        <div className='flex p-4 items-start gap-4 border-b border-secondary'>
+        <div className='flex p-4 items-start gap-4 border-b rounded-b-3xl bg-transparent '>
             <div className='avatar'>
                 <div className='w-8 rounded-full'>
                     <img src={authUser.profileImg || "/avatar-placeholder.png"} />
@@ -61,8 +64,8 @@ const CreatePost = () => {
             </div>
             <form className='flex flex-col gap-2 w-full' onSubmit={handleSubmit}>
                 <textarea
-                    className='textarea w-full p-0 text-lg resize-none border-none focus:outline-none  border-gray-800'
-                    placeholder='What is happening?!'
+                    className='textarea bg-transparent text-primary w-full p-0 text-lg resize-none border-none focus:outline-none  border-gray-800'
+                    placeholder='Share Your Analysis!'
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                 />
@@ -85,11 +88,17 @@ const CreatePost = () => {
                             className='fill-primary w-6 h-6 cursor-pointer'
                             onClick={() => imgRef.current.click()}
                         />
-                        <BsEmojiSmileFill className='fill-primary w-5 h-5 cursor-pointer' />
+
+                        <BsEmojiSmileFill onClick={(e) => { setEmojiClicked(!emojiClicked) }} className='fill-primary w-5 h-5 hidden lg:block cursor-pointer' />
+                        {emojiClicked && (
+                            <div style={{ position: 'absolute', top: '30%', right: '60%', left: '40%', zIndex: 1 }}>
+                                {/* <Picker data={data} onEmojiSelect={console.log} /> */}
+                            </div>
+                        )}
                     </div>
                     <input accept="image/*" type='file' hidden ref={imgRef} onChange={handleImgChange} />
                     <button className='btn btn-primary rounded-full btn-sm text-secondary px-4'>
-                        {isPending ? "Posting..." : "Post"}
+                        {isPending ? "Sharing..." : "Share"}
                     </button>
                 </div>
                 {isError && <div className='text-red-500'>Something Went Wrong!!</div>}

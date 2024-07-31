@@ -1,0 +1,55 @@
+.sidebarBg {
+    background: #000000;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #434343, #000000);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #434343, #000000);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.whoToFollow {
+    background: #0f0c29;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.homeBg {
+    background: #8e9eab;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #eef2f3, #8e9eab);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #eef2f3, #8e9eab);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.homeBg2 {
+    background: #606c88;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #3f4c6b, #606c88);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #3f4c6b, #606c88);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.homebg3 {
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+.createPostBg {
+    background-image: linear-gradient(174.2deg, rgba(255, 244, 228, 1) 7.1%, rgba(240, 246, 238, 1) 67.4%);
+}
+
+.postBg {
+    background: rgb(190, 190, 190);
+    background: -moz-linear-gradient(180deg, rgba(190, 190, 190, 0.6504726890756303) 0%, rgba(228, 228, 228, 1) 26%);
+    background: -webkit-linear-gradient(180deg, rgba(190, 190, 190, 0.6504726890756303) 0%, rgba(228, 228, 228, 1) 26%);
+    background: linear-gradient(180deg, rgba(190, 190, 190, 0.6504726890756303) 0%, rgba(228, 228, 228, 1) 26%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bebebe", endColorstr="#e4e4e4", GradientType=1);
+}

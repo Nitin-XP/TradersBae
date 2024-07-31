@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { BiRepost } from "react-icons/bi";
 import { FaRegComment, FaRegHeart, FaTrash } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa6";
 import { Link } from "react-router-dom";
@@ -109,7 +108,7 @@ const Post = ({ post }) => {
 
     return (
         <>
-            <div className='flex gap-2 items-start p-4 border-b border-gray-700'>
+            <div className='flex gap-2 items-start p-4 border-[4px] hover:drop-shadow-2xl my-4 mx-1 rounded-[30px] postBg border-none'>
                 <div className='avatar'>
                     <Link to={`/profile/${postOwner.username}`} className='w-8 rounded-full overflow-hidden'>
                         <img src={postOwner.profileImg || "/avatar-placeholder.png"} />
@@ -117,10 +116,10 @@ const Post = ({ post }) => {
                 </div>
                 <div className='flex flex-col flex-1'>
                     <div className='flex gap-2 items-center'>
-                        <Link to={`/profile/${postOwner.username}`} className='font-bold text-yellow-400'>
+                        <Link to={`/profile/${postOwner.username}`} className='font-bold text-primary'>
                             {postOwner.fullname}
                         </Link>
-                        <span className=' text-yellow-400 flex gap-1 text-sm'>
+                        <span className=' text-primary flex gap-1 font-semibold text-sm'>
                             <Link to={`/profile/${postOwner.username}`}>@{postOwner.username}</Link>
                             <span>·</span>
                             <span>{formattedDate}</span>
@@ -139,13 +138,13 @@ const Post = ({ post }) => {
                         {post.img && (
                             <img
                                 src={post.img}
-                                className='h-80 object-contain rounded-lg border border-gray-700'
+                                className='h-80 object-contain rounded-lg  border-gray-700'
                                 alt=''
                             />
                         )}
                     </div>
                     <div className='flex justify-between mt-3'>
-                        <div className='flex gap-4 items-center w-2/3 justify-between'>
+                        <div className='flex gap-4 items-center w-2/3 justify-start'>
                             <div
                                 className='flex gap-1 items-center cursor-pointer group'
                                 onClick={() => document.getElementById("comments_modal" + post._id).showModal()}
@@ -155,7 +154,7 @@ const Post = ({ post }) => {
                                     {post.comments.length}
                                 </span>
                             </div>
-                            {/* We're using Modal Component from DaisyUI */}
+                            {/* Comment Modal */}
                             <dialog id={`comments_modal${post._id}`} className='modal border-none outline-none'>
                                 <div className='modal-box rounded border border-gray-600'>
                                     <h3 className='font-bold text-lg mb-4'>COMMENTS</h3>
@@ -176,8 +175,8 @@ const Post = ({ post }) => {
                                                 </div>
                                                 <div className='flex flex-col'>
                                                     <div className='flex items-center gap-1'>
-                                                        <span className='font-bold text-yellow-300'>{comment.user.fullname}</span>
-                                                        <span className='text-yellow-700 text-sm'>
+                                                        <span className='font-bold text-[#012538]'>{comment.user.fullname}</span>
+                                                        <span className=' text-gray-600 text-sm'>
                                                             @{comment.user.username}
                                                         </span>
                                                     </div>
@@ -196,11 +195,11 @@ const Post = ({ post }) => {
                                             value={comment}
                                             onChange={(e) => setComment(e.target.value)}
                                         />
-                                        <button className='btn btn-primary rounded-full btn-sm text-black px-4'>
+                                        <button className='btn btn-primary rounded-full btn-sm text-secondary px-4'>
                                             {isCommenting ? (
                                                 <LoadingSpinner size="md" />
                                             ) : (
-                                                "Post"
+                                                "Reply"
                                             )}
                                         </button>
                                     </form>
@@ -209,10 +208,14 @@ const Post = ({ post }) => {
                                     <button className='outline-none'>close</button>
                                 </form>
                             </dialog>
-                            <div className='flex gap-1 items-center group cursor-pointer'>
+
+                            {/* Repost */}
+                            {/* <div className='flex gap-1 items-center group cursor-pointer'>
                                 <BiRepost className='w-6 h-6  text-slate-500 group-hover:text-green-500' />
                                 <span className='text-sm text-slate-500 group-hover:text-green-500'>0</span>
-                            </div>
+                            </div> */}
+
+                            {/* Like Post */}
                             <div className='flex gap-1 items-center group cursor-pointer' onClick={handleLikePost}>
                                 {isLiking && <LoadingSpinner size="md" />}
                                 {!isLiked && !isLiking && (
@@ -228,6 +231,7 @@ const Post = ({ post }) => {
                                 </span>
                             </div>
                         </div>
+                        {/* Save Post */}
                         <div className='flex w-1/3 justify-end gap-2 items-center'>
                             <FaRegBookmark className='w-4 h-4 text-slate-500 cursor-pointer' />
                         </div>
