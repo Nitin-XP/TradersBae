@@ -28,7 +28,7 @@ const RightPanel = () => {
     if (suggestedUser?.length === 0) return <div className=" md:w-64 w-0"></div>
 
     return (
-        <div className='hidden lg:block bg-[#4D555B] '>
+        <div className='hidden lg:block homeBg3 '>
             <div className=' bg-[#4D555B] p-4 rounded-md sticky top-2'>
                 <p className='font-bold text-center text-secondary'>Suggested for you</p>
                 <div className='flex mt-4 flex-col gap-4'>

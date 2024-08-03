@@ -4,9 +4,9 @@ import React, { lazy } from "react";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import LoadingSpinner from "./components/common/LoadSpinner.jsx";
-import RightPanel from "./components/common/RightPanel.jsx";
 import Sidebar from "./components/common/SideBar.jsx";
 const LazyHome = lazy(() => import('./pages/home/Home.jsx'));
+const LazyCalendar = lazy(() => import('./pages/widgets/news/Calendar.jsx'));
 const LazyAbout = lazy(() => import('./pages/About.jsx'));
 const LazySettings = lazy(() => import('./pages/Settings.jsx'));
 const LazyUsers = lazy(() => import('./pages/Users.jsx'));
@@ -52,16 +52,22 @@ function App() {
         <div className="flex max-w-full mx-auto bg-slate-100">
           {authUser && <Sidebar />}
           <Routes>
+            {/* AuthRoutes */}
             <Route path='/' element={<React.Suspense >{authUser ? <LazyHome /> : <Navigate to='/login' />}</React.Suspense>} />
             <Route path='/login' element={<React.Suspense >{!authUser ? <LazyLogin /> : <Navigate to='/' />}</React.Suspense>} />
             <Route path='/signup' element={<React.Suspense >{!authUser ? <LazySignUp /> : <Navigate to='/' />}</React.Suspense>} />
 
+            {/* SideBar Routes */}
+            <Route path="/widgets" element={<React.Suspense ><LazyCalendar /></React.Suspense>} >
+              <Route path='/widgets/calendar' element={<React.Suspense ><LazyCalendar /></React.Suspense>} />
+            </Route>
+
             <Route path="/notifications" element={<React.Suspense >{!authUser ? <Navigate to="/login" /> : <LazyNotification />}</React.Suspense>} />
             <Route path="/profile/:username" element={<React.Suspense >{!authUser ? <Navigate to="/login" /> : <LazyProfilePage />}</React.Suspense>} />
-            <Route path="*" element={<>Not Found</>} />
+
+            {/* Error Route */}
+            <Route path="*" element={<center>Not Found</center>} />
           </Routes>
-          {authUser && <RightPanel />}
-          {/* <RightPanel /> */}
           <Toaster />
         </div>
       </BrowserRouter>
