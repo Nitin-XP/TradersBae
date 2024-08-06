@@ -70,6 +70,7 @@ const Sidebar = () => {
                     </li>
                     <li className='flex justify-center md:justify-start'>
                         <Link
+                            to={`/widgets`}
                             className='flex gap-3 items-center text-secondary transition-all rounded-full duration-300 py-2 pl-2 pr-4 max-w-fit cursor-pointer'
                         >
                             <MdWidgets className='w-6 h-6 ' />

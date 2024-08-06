@@ -17,7 +17,7 @@ export const Fundamentals = () => {
             const script = document.createElement('script');
             script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-events.js';
             script.async = true;
-            script.innerHTML = JSON.stringify({
+            script.textContent = JSON.stringify({
                 width: '100%',
                 height: '100%',
                 colorTheme: 'light',
@@ -28,9 +28,7 @@ export const Fundamentals = () => {
             });
 
             // Append the script to the container div
-            if (containerRef.current) {
-                containerRef.current.appendChild(script);
-            }
+            containerRef.current.appendChild(script);
         };
 
         loadTradingViewScript();

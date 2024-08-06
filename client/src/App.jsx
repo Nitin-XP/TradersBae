@@ -5,12 +5,15 @@ import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import LoadingSpinner from "./components/common/LoadSpinner.jsx";
 import Sidebar from "./components/common/SideBar.jsx";
+import { Fundamentals } from "./pages/widgets/news/Fundamentals.jsx";
 const LazyHome = lazy(() => import('./pages/home/Home.jsx'));
+
+const LazyWidgets = lazy(() => import('./pages/widgets/Widgets.jsx'));
 const LazyCalendar = lazy(() => import('./pages/widgets/news/Calendar.jsx'));
-const LazyAbout = lazy(() => import('./pages/About.jsx'));
-const LazySettings = lazy(() => import('./pages/Settings.jsx'));
-const LazyUsers = lazy(() => import('./pages/Users.jsx'));
-const LazyContact = lazy(() => import('./pages/Contact.jsx'));
+const LazyChart = lazy(() => import('./pages/widgets/forexPairs/Forex.jsx'));
+const LazyHeatmap = lazy(() => import('./pages/widgets/heatmaps/Heatmap.jsx'));
+const LazyScreener = lazy(() => import('./pages/widgets/screeners/Screener.jsx'));
+
 const LazyLogin = lazy(() => import('./pages/auth/Login.jsx'));
 const LazySignUp = lazy(() => import('./pages/auth/SignUp.jsx'));
 const LazyNotification = lazy(() => import('./pages/notification/NotificationPage.jsx'));
@@ -58,9 +61,13 @@ function App() {
             <Route path='/signup' element={<React.Suspense >{!authUser ? <LazySignUp /> : <Navigate to='/' />}</React.Suspense>} />
 
             {/* SideBar Routes */}
-            <Route path="/widgets" element={<React.Suspense ><LazyCalendar /></React.Suspense>} >
-              <Route path='/widgets/calendar' element={<React.Suspense ><LazyCalendar /></React.Suspense>} />
-            </Route>
+            <Route path="/widgets" element={<React.Suspense ><LazyWidgets /></React.Suspense>} />
+            <Route path="/widgets/calendar" element={<React.Suspense ><LazyCalendar /></React.Suspense>} />
+            <Route path="/widgets/charts" element={<React.Suspense ><LazyChart /></React.Suspense>} />
+            <Route path="/widgets/heatmaps" element={<React.Suspense ><LazyHeatmap /></React.Suspense>} />
+            <Route path="/widgets/news" element={<React.Suspense fallback={<LoadingSpinner />} ><Fundamentals /></React.Suspense>} />
+            <Route path="/widgets/screeners" element={<React.Suspense ><LazyScreener /></React.Suspense>} />
+
 
             <Route path="/notifications" element={<React.Suspense >{!authUser ? <Navigate to="/login" /> : <LazyNotification />}</React.Suspense>} />
             <Route path="/profile/:username" element={<React.Suspense >{!authUser ? <Navigate to="/login" /> : <LazyProfilePage />}</React.Suspense>} />
