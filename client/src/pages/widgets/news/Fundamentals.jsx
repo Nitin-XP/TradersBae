@@ -1,57 +1,86 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
+import TickerTape from '../ticker/TickerTape';
 
 export const Fundamentals = () => {
-    const containerRef = useRef(null);
-
     useEffect(() => {
-        // Function to load the TradingView script dynamically
-        const loadTradingViewScript = () => {
-            if (!containerRef.current) return;
+        const script = document.createElement('script');
+        script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-timeline.js';
+        script.async = true;
+        script.innerHTML = JSON.stringify({
+            feedMode: 'all_symbols',
+            isTransparent: true,
+            displayMode: 'adaptive',
+            width: '100%',
+            height: '600',
+            colorTheme: 'light',
+            locale: 'en',
+        });
+        document.getElementById('tradingview-widget').appendChild(script);
 
-            const existingScript = containerRef.current.querySelector('script[src="https://s3.tradingview.com/external-embedding/embed-widget-events.js"]');
-
-            if (existingScript) {
-                return;
-            }
-
-            const script = document.createElement('script');
-            script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-events.js';
-            script.async = true;
-            script.textContent = JSON.stringify({
-                width: '100%',
-                height: '100%',
-                colorTheme: 'light',
-                isTransparent: true,
-                locale: 'en',
-                importanceFilter: '-1,0,1',
-                countryFilter: 'ar,au,br,ca,cn,fr,de,in,id,it,jp,kr,mx,ru,sa,za,tr,gb,us,eu'
-            });
-
-            // Append the script to the container div
-            containerRef.current.appendChild(script);
-        };
-
-        loadTradingViewScript();
-
-        // Cleanup function to remove the script when the component unmounts
+        // Cleanup to remove the script if the component is unmounted
         return () => {
-            if (containerRef.current) {
-                const script = containerRef.current.querySelector('script[src="https://s3.tradingview.com/external-embedding/embed-widget-events.js"]');
-                if (script) {
-                    containerRef.current.removeChild(script);
-                }
-            }
+            document.getElementById('tradingview-widget').innerHTML = '';
         };
     }, []);
 
     return (
-        <div className='max-w-full w-full'>
-            <div>
-                <h1 className=' font-semibold text-primary text-center'>Track the Market Fundamentals</h1>
+        <>
+            <div className=' max-w-full px-10 '>
+                <div className=' py-4 flex flex-col justify-center items-center'>
+                    <h1 className=' font-bold text-[20px] md:text-[25px] lg:text-[30px] '>Top Stories</h1>
+                    <p className=' pt-1 px-4 font-semibold text-[10px] md:text-[15px] lg:text-[20px] '>Help you to keep track of what's happening in the crypto and stock markets with our daily news briefs – designed to be read in 20 seconds or less.</p>
+                </div>
+                <div className=' rounded-2xl bg-slate-200 mt-10 max-w-full'>
+                    <div className="tradingview-widget-container">
+                        <div id="tradingview-widget" className="tradingview-widget-container__widget"></div>
+                        <div className="tradingview-widget-copyright">
+                            <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+                                <span className="blue-text">Earning Comes After Learning.</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <TickerTape />
             </div>
-            <div className="tradingview-widget-container" style={{ width: '100%', height: '100%' }}>
-                <div ref={containerRef} className="tradingview-widget-container__widget"></div>
+        </>
+    );
+};
+
+export const RightPanelNews = () => {
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-timeline.js';
+        script.async = true;
+        script.innerHTML = JSON.stringify({
+            feedMode: 'all_symbols',
+            isTransparent: true,
+            displayMode: 'compact',
+            width: '100%',
+            height: '100%',
+            colorTheme: 'light',
+            locale: 'en',
+        });
+        document.getElementById('tradingview-widget').appendChild(script);
+
+        // Cleanup to remove the script if the component is unmounted
+        return () => {
+            document.getElementById('tradingview-widget').innerHTML = '';
+        };
+    }, []);
+
+    return (
+        <div className=' max-w-1/3 w-full'>
+            <div className=' rounded-2xl bg-slate-200 mt-10 max-w-1/3'>
+                <div className="tradingview-widget-container">
+                    <div id="tradingview-widget" className="tradingview-widget-container__widget"></div>
+                    <div className="tradingview-widget-copyright">
+                        <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+                            <span className="blue-text">Earning Comes After Learning.</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     );
-}
+};
+
