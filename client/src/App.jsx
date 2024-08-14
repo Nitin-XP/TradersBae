@@ -10,7 +10,8 @@ const LazyHome = lazy(() => import('./pages/home/Home.jsx'));
 
 const LazyWidgets = lazy(() => import('./pages/widgets/Widgets.jsx'));
 const LazyCalendar = lazy(() => import('./pages/widgets/news/Calendar.jsx'));
-const LazyChart = lazy(() => import('./pages/widgets/forexPairs/Forex.jsx'));
+const LazyForex = lazy(() => import('./pages/widgets/forexPairs/Forex.jsx'));
+const LazyChart = lazy(() => import('./pages/widgets/forexPairs/Charts.jsx'));
 const LazyHeatmap = lazy(() => import('./pages/widgets/heatmaps/Heatmap.jsx'));
 const LazyScreener = lazy(() => import('./pages/widgets/screeners/Screener.jsx'));
 
@@ -63,7 +64,8 @@ function App() {
             {/* SideBar Routes */}
             <Route path="/widgets" element={<React.Suspense ><LazyWidgets /></React.Suspense>} />
             <Route path="/widgets/calendar" element={<React.Suspense ><LazyCalendar /></React.Suspense>} />
-            <Route path="/widgets/charts" element={<React.Suspense ><LazyChart /></React.Suspense>} />
+            <Route path="/widgets/forex" element={<React.Suspense ><LazyForex /></React.Suspense>} />
+            <Route path="/widgets/forex/chart" element={<React.Suspense ><LazyChart /></React.Suspense>} />
             <Route path="/widgets/heatmaps" element={<React.Suspense ><LazyHeatmap /></React.Suspense>} />
             <Route path="/widgets/news" element={<React.Suspense fallback={<LoadingSpinner />} ><Fundamentals /></React.Suspense>} />
             <Route path="/widgets/screeners" element={<React.Suspense ><LazyScreener /></React.Suspense>} />

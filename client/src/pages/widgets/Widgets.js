@@ -6,7 +6,7 @@ export const widgets = [
         heading: "Charts",
         para: "Interactive Charts for In-Depth Market Analysis",
         btnText: "Let's Analyze",
-        link: "/widgets/charts",
+        link: "/widgets/forex",
         src: charts,
     },
     {
