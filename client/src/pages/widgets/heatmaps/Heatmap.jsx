@@ -7,7 +7,7 @@ import StockHeatmap from './StockHeatmap'
 
 const Heatmap = () => {
     return (
-        <main className=' max-w-full w-full '>
+        <main className=' max-w-full w-full font-serif bg-yellow-100 '>
             <div className=' py-4 flex flex-col justify-center items-center'>
                 <h1 className=' font-bold text-[20px] md:text-[25px] lg:text-[30px] '>Heatmaps</h1>
                 <p className=' pt-1 font-semibold text-[10px] md:text-[15px] lg:text-[20px] '>Track Sector Strength and Weakness</p>
@@ -18,7 +18,7 @@ const Heatmap = () => {
                         <h1 className=' font-semibold text-[20px] md:text-[25px] lg:text-[30px] '>Stock Heatmap Widget</h1>
                         <p className=' pt-1 font-normal text-[10px] md:text-[15px] lg:text-[20px] '>This widget shows off a macro view on global stocks. Perfect for segmenting by sector, country or market cap.</p>
                     </div>
-                    <div className=' w-full mt-10'>
+                    <div className=' bg-yellow-50 w-full mt-10'>
                         <StockHeatmap />
                     </div>
                 </div>

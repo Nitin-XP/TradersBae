@@ -42,7 +42,7 @@ const ForexCrossRatesWidget = () => {
     }, []);
 
     return (
-        <div className="tradingview-widget-container" style={{ width: '100%', height: '100%' }}>
+        <div className="tradingview-widget-container bg-yellow-50" style={{ width: '100%', height: '100%' }}>
             <div ref={widgetRef} className="tradingview-widget-container__widget"></div>
             <div className="tradingview-widget-copyright">
                 <a href="https://www.tradingview.com/" rel="noopener noreferrer" target="_blank">

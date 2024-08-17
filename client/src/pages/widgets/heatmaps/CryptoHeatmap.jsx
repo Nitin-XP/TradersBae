@@ -36,9 +36,9 @@ const CryptoHeatmapWidget = () => {
     }, []);
 
     return (
-        <div className="tradingview-widget-container">
-            <div ref={widgetRef} className="tradingview-widget-container__widget"></div>
-            <div className="tradingview-widget-copyright">
+        <div className="tradingview-widget-container bg-yellow-50">
+            <div ref={widgetRef} className="tradingview-widget-container__widget "></div>
+            <div className="tradingview-widget-copyright ">
                 <a href="https://www.tradingview.com/" rel="noopener noreferrer" target="_blank">
                     <span className="blue-text">Track it to Crack it!</span>
                 </a>

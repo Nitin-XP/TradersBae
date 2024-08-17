@@ -33,7 +33,7 @@ const ForexScreener = () => {
     return (
         <div className='max-w-full flex flex-col justify-center p-4'>
             <center>
-                <div className='w-full px-10 bg-slate-200 rounded-2xl'>
+                <div className='w-full px-10 bg-yellow-50 rounded-2xl'>
                     <div className="tradingview-widget-container">
                         <div id="tradingview-forex-screener-widget" className="tradingview-widget-container__widget"></div>
                         <div className="tradingview-widget-copyright">

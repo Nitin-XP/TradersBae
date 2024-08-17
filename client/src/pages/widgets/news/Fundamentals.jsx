@@ -25,12 +25,12 @@ export const Fundamentals = () => {
 
     return (
         <>
-            <div className=' max-w-full px-10 '>
+            <div className=' max-w-full px-10 font-serif widgetsBg '>
                 <div className=' py-4 flex flex-col justify-center items-center'>
                     <h1 className=' font-bold text-[20px] md:text-[25px] lg:text-[30px] '>Top Stories</h1>
                     <p className=' pt-1 px-4 font-semibold text-[10px] md:text-[15px] lg:text-[20px] '>Help you to keep track of what's happening in the crypto and stock markets with our daily news briefs – designed to be read in 20 seconds or less.</p>
                 </div>
-                <div className=' rounded-2xl bg-slate-200 mt-10 max-w-full'>
+                <div className=' rounded-2xl bg-yellow-50 mt-10 max-w-full'>
                     <div className="tradingview-widget-container">
                         <div id="tradingview-widget" className="tradingview-widget-container__widget"></div>
                         <div className="tradingview-widget-copyright">

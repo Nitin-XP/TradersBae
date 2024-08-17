@@ -30,10 +30,10 @@ const Calendar = () => {
     }, []);
 
     return (
-        <div className='max-w-full flex flex-col justify-center p-4'>
+        <div className='max-w-full flex flex-col justify-center p-4 font-serif widgetsBg'>
             <div className='py-2 lg:py-4 px-10 flex flex-col justify-center items-center'>
                 <h1 className='font-bold text-[20px] md:text-[25px] lg:text-[30px]'>Economic Calendar</h1>
-                <p className='pt-1 font-semibold text-[10px] md:text-[15px] lg:text-[20px]'>
+                <p className='pt-1 font-medium text-[10px] md:text-[15px] lg:text-[20px]'>
                     Keep an eye on key upcoming economic events, announcements, and news. Plus, set up filters in a few clicks, selecting for event importance and affected currencies.
                 </p>
             </div>
@@ -41,7 +41,7 @@ const Calendar = () => {
                 You can tap on Network Icon to see <span className='font-bold text-red-600'>High Impact News.</span>
             </p>
             <center>
-                <div className='w-full lg:w-[95%] px-10 bg-slate-200 rounded-2xl'>
+                <div className='w-full lg:w-[95%] px-10 bg-yellow-50 rounded-2xl'>
                     <div className="tradingview-widget-container">
                         <div id="tradingview-events-widget" className="tradingview-widget-container__widget"></div>
                         <div className="tradingview-widget-copyright">

@@ -7,7 +7,7 @@ import { widgets } from './Widgets';
 const Widgets = () => {
     return (
         <>
-            <main className='max-w-full w-full h-full'>
+            <main className='max-w-full font-serif w-full widgetsBg h-full'>
                 <div className=' items-center mt-4 '>
                     <h1 className=' text-center font-bold text-[20px] sm:text-[25px] lg:text-[30px] '>Trader's Toolkits</h1>
                     <h2 className=' text-center mt-2 font-semibold text-[10px] sm:text-[15px] lg:text-[20px]'>Everything You Need to Make Informed Decisions!</h2>
@@ -15,7 +15,7 @@ const Widgets = () => {
                 <div className=' my-4 flex flex-wrap justify-center w-full gap-5 max-w-full'>
                     {
                         widgets.map((widget) => (
-                            <div key={widget.id} className="card bg-base-100 my-4 w-1/2 sm:w-1/3 lg:w-1/4 rounded-2xl shadow-xl">
+                            <div key={widget.id} className="card bg-yellow-100 my-4 w-1/2 sm:w-1/3 lg:w-1/4 rounded-2xl shadow-xl">
                                 <div className=" hidden md:inline-block px-10 pt-10">
                                     <img
                                         src={widget.src}

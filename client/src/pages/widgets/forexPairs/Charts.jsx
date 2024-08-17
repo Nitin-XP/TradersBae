@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const AdvancedChart = ({ pairName }) => {
     const containerId = `tradingview-widget-container-${pairName.replace(':', '-')}`;
@@ -54,20 +55,58 @@ const AdvancedChart = ({ pairName }) => {
     );
 };
 
+function CustomDropdown({ asset, pairs, pair, handleChange }) {
+    const selectedLabel = pairs.find(option => option.value === pair)?.label || `${asset}`;
+
+    const handleSelect = (value) => {
+        handleChange({ target: { value } });
+    };
+
+
+    return (
+        <div className="dropdown dropdown-hover" >
+            <div tabIndex={0} role="button" className="btn rounded-2xl m-1">
+                {selectedLabel}
+            </div>
+            <ul tabIndex={0} className="dropdown-content menu bg-white rounded-[20px] z-[1] w-52 p-2 shadow">
+                <li className="text-gray-500" disabled>
+                    <a>Select an asset</a>
+                </li>
+                {pairs.map((option) => (
+                    <li key={option.value}>
+                        <Link onClick={() => handleSelect(option.value)}>{option.label}</Link>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+}
 
 const Chart = () => {
     const [pair, setPair] = useState("");
     const pairs = [
-        { value: 'FX:EURUSD', label: 'EURUSD' },
-        { value: 'FX:USDJPY', label: 'USDJPY' },
-        { value: 'FX:GBPUSD', label: 'GBPUSD' },
-        { value: 'FX:GBPJPY', label: 'GBPJPY' },
-        { value: 'FX:AUDUSD', label: 'AUDUSD' },
+        { value: 'OANDA:EURUSD', label: 'EURUSD' },
+        { value: 'OANDA:USDJPY', label: 'USDJPY' },
+        { value: 'OANDA:GBPUSD', label: 'GBPUSD' },
+        { value: 'OANDA:GBPJPY', label: 'GBPJPY' },
+        { value: 'OANDA:AUDUSD', label: 'AUDUSD' },
         { value: 'XAUUSD', label: 'XAUUSD' },
         { value: 'OANDA:XAGUSD', label: 'XAGUSD' },
-        { value: 'FX:EURJPY', label: 'EURJPY' },
+        { value: 'OANDA:EURJPY', label: 'EURJPY' },
+    ];
+    const indices = [
         { value: 'NASDAQ:NDX', label: 'NDX' },
-        { value: 'BSE:SENSEX', label: 'SENSEX' }
+        { value: 'BSE:SENSEX', label: 'SENSEX' },
+        { value: 'CAPITALCOM:DXY', label: 'Dollar Index' },
+        { value: 'CAPITALCOM:US30', label: 'US30' },
+        { value: 'NSE:NIFTY', label: 'Nifty50' },
+        { value: 'NSE:BANKNIFTY', label: 'BANKNIFTY' },
+    ];
+    const cryptos = [
+        { value: 'COINBASE:BTCUSD', label: 'BTCUSD' },
+        { value: 'BINANCE:ETHUSD', label: 'ETHUSD' },
+        { value: 'BINANCE:XRPUSDT', label: 'XRPUSDT' },
+        { value: 'BINANCE:SHIBUSDT', label: 'SHIBUSDT' },
     ];
 
     const handleChange = (event) => {
@@ -75,17 +114,15 @@ const Chart = () => {
     };
 
     return (
-        <main className=' max-w-full w-full'>
+        <main className=' max-w-full w-full font-serif widgetsBg'>
             <div className=' my-4 flex flex-col justify-center items-center'>
-                <h1>Choose the Chart From the DropDown</h1>
-                <select value={pair} onChange={handleChange}>
-                    <option value="" disabled>Select a pair</option>
-                    {pairs.map((option) => (
-                        <option key={option.value} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
-                </select>
+                <p className=' py-5 font-semibold text-[10px] md:text-[15px] lg:text-[20px] '>Choose the Chart From the DropDown!</p>
+                <div>
+                    <CustomDropdown asset={"Forex Pairs"} pairs={pairs} pair={pair} handleChange={handleChange} />
+                    <CustomDropdown asset={"Indices"} pairs={indices} pair={pair} handleChange={handleChange} />
+                    <CustomDropdown asset={"Cryptos"} pairs={cryptos} pair={pair} handleChange={handleChange} />
+
+                </div>
             </div>
             <div className=' rounded-xl max-w-full w-full h-screen'>
                 <AdvancedChart pairName={pair} />

@@ -6,11 +6,11 @@ import ForexScreener from './ForexScreener'
 const Screener = () => {
     return (
         <>
-            <main className=' max-w-full w-full'>
+            <main className=' max-w-full w-full font-serif bg-yellow-100'>
                 <div className=' py-4 flex flex-col justify-center items-center'>
                     <h1 className=' font-bold text-[20px] md:text-[25px] lg:text-[30px] '>Screeners</h1>
                 </div>
-                <div className=' flex flex-col my-6'>
+                <div className=' flex flex-col mb-6'>
                     <div className=' mt-5 px-10 w-full items-center'>
                         <div className=' flex flex-col justify-start'>
                             <h1 className=' font-semibold text-[20px] md:text-[25px] lg:text-[30px] '>Forex Screener</h1>

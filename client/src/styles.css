@@ -54,8 +54,6 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bebebe", endColorstr="#e4e4e4", GradientType=1);
 }
 
-.widgetBg {
-    background: #959595;
-    background: linear-gradient(to right, #959595 0%, #0D0D0D 46%, #010101 50%, #0A0A0A 53%, #4E4E4E 76%, #383838 87%, #1B1B1B 100%);
-
+.widgetsBg {
+    background: linear-gradient(150deg, rgba(247, 244, 144, 1), rgba(243, 238, 238, 1), rgba(247, 255, 180, 1))
 }
