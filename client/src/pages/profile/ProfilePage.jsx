@@ -71,11 +71,11 @@ const ProfilePage = () => {
 
     return (
         <>
-            <div className='flex-[4_4_0] homeBg2 border-r border-secondary min-h-screen '>
+            <div className='flex-[4_4_0] border-r border-secondary min-h-screen '>
                 {/* HEADER */}
                 {isLoading && !isRefetching && <ProfileHeaderSkeleton />}
                 {!isLoading && !isRefetching && !user && <p className='text-center text-lg mt-4'>User not found</p>}
-                <div className='flex homeBg flex-col'>
+                <div className='flex homeBg3 flex-col'>
                     {!isLoading && !isRefetching && user && (
                         <>
                             <div className='flex gap-10 px-4 py-2 items-center'>
@@ -160,9 +160,9 @@ const ProfilePage = () => {
 
                             <div className='flex flex-col gap-4 mt-14 px-4'>
                                 <div className='flex flex-col text-primary'>
-                                    <span className='font-bold text-lg'>{user?.fullname}</span>
-                                    <span className='text-sm'>@{user?.username}</span>
-                                    <span className='text-sm my-1'>{user?.bio}</span>
+                                    <span className='font-bold text-[20px] md:text-[30px] '>{user?.fullname}</span>
+                                    <span className='text-[10px] md:text-[20px] '>@{user?.username}</span>
+                                    <span className='text-[10px] md:text-[20px] my-1'>{user?.bio}</span>
                                 </div>
 
                                 <div className='flex gap-2 flex-wrap'>
@@ -174,7 +174,7 @@ const ProfilePage = () => {
                                                     href={user.link}
                                                     target='_blank'
                                                     rel='noreferrer'
-                                                    className='text-sm text-blue-500 hover:underline'
+                                                    className='text-[16px] text-blue-500 hover:underline'
                                                 >
                                                     {user.link}
                                                 </a>
@@ -183,17 +183,17 @@ const ProfilePage = () => {
                                     )}
                                     <div className='flex gap-2 items-center'>
                                         <IoCalendarOutline className='w-4 h-4 text-primary' />
-                                        <span className='text-sm text-primary'>{formatMemberSinceDate(user?.createdAt)} </span>
+                                        <span className='text-[16px] text-primary'>{formatMemberSinceDate(user?.createdAt)} </span>
                                     </div>
                                 </div>
                                 <div className='flex gap-2'>
                                     <div className='flex gap-1 items-center'>
-                                        <span className='font-bold text-xs'>{user?.following.length}</span>
-                                        <span className='text-primary text-xs'>Following</span>
+                                        <span className='font-bold text-[16px]'>{user?.following.length}</span>
+                                        <span className='text-primary text-[16px]'>Following</span>
                                     </div>
                                     <div className='flex gap-1 items-center'>
-                                        <span className='font-bold text-xs'>{user?.followers.length}</span>
-                                        <span className='text-primary text-xs'>Followers</span>
+                                        <span className='font-bold text-[16px]'>{user?.followers.length}</span>
+                                        <span className='text-primary text-[16px]'>Followers</span>
                                     </div>
                                 </div>
                             </div>
