@@ -29,7 +29,7 @@ const RightPanel = () => {
 
     return (
         <div className='hidden lg:block homeBg3 '>
-            <div className=' bg-[#4D555B] p-4 rounded-md sticky top-2'>
+            <div className=' bg-[#4D555B] p-4 rounded-md sticky top-1'>
                 <p className='font-bold text-center text-secondary'>Suggested for you</p>
                 <div className='flex mt-4 flex-col gap-4'>
                     {/* item */}

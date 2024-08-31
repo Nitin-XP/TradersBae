@@ -13,6 +13,7 @@ import { FaLink } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
+import RightPanel from "../../components/common/RightPanel";
 import useFollow from "../../hooks/useFollow";
 import useUpdateUserProfile from "../../hooks/useUpdateUserProfile";
 import { formatMemberSinceDate } from "../../utils/date";
@@ -220,10 +221,10 @@ const ProfilePage = () => {
                                 </div>
                                 {isMyProfile && <div
                                     className='flex justify-center flex-1 p-3 text-primary hover:bg-secondary transition duration-300 relative cursor-pointer'
-                                    onClick={() => setFeedType("likes")}
+                                    onClick={() => setFeedType("saves")}
                                 >
                                     Saved Posts
-                                    {feedType === "posts" && (
+                                    {feedType === "saves" && (
                                         <div className='absolute bottom-0 w-10  h-1 rounded-full bg-primary' />
                                     )}
                                 </div>}
@@ -234,6 +235,7 @@ const ProfilePage = () => {
                     <Posts feedType={feedType} username={username} userId={user?._id} />
                 </div>
             </div>
+            <RightPanel />
         </>
     );
 };

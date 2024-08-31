@@ -16,6 +16,7 @@ const Post = ({ post }) => {
 
     const postOwner = post.user;
     const isLiked = post.likes.includes(authUser._id);
+    const isSaved = post.saves.includes(authUser._id);
 
     const isMyPost = authUser._id === post.user._id;
 
@@ -89,6 +90,22 @@ const Post = ({ post }) => {
         }
     })
 
+    const { mutate: savePost, isPending: isSaving } = useMutation({
+        mutationFn: async () => {
+            try {
+                const res = await axios.post(`http://localhost:8000/api/posts/save/${post._id}`);
+                const data = await res.data;
+                if (res.status !== 200) throw new Error(data.error || "Something Went Wrong!!");
+                return data;
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['posts'] });
+        }
+    });
+
     const handleDeletePost = () => {
         if (confirm("Delete Post?")) {
             deletePost();
@@ -104,6 +121,10 @@ const Post = ({ post }) => {
     const handleLikePost = () => {
         if (isLiking) return;
         likePost();
+    };
+    const handleSavePost = () => {
+        if (isSaving) return;
+        savePost();
     };
 
     return (
@@ -232,8 +253,12 @@ const Post = ({ post }) => {
                             </div>
                         </div>
                         {/* Save Post */}
-                        <div className='flex w-1/3 justify-end gap-2 items-center'>
-                            <FaRegBookmark className='w-4 h-4 text-slate-500 cursor-pointer' />
+                        <div className='flex w-1/3 justify-end gap-2 items-center' onClick={handleSavePost}>
+                            {isSaving && <LoadingSpinner size="md" />}
+                            {!isSaved && !isSaving && (
+                                <FaRegBookmark className='w-4 h-4 text-slate-500 hover:text-black cursor-pointer' />
+                            )}
+                            {isSaved && !isSaving && <FaRegBookmark className='w-4 h-4 text-black cursor-pointer' />}
                         </div>
                     </div>
                 </div>

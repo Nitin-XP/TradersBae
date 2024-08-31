@@ -16,6 +16,8 @@ const Posts = ({ feedType, username, userId }) => {
                 return `http://localhost:8000/api/posts/user/${username}`
             case "likes":
                 return `http://localhost:8000/api/posts/likes/${userId}`
+            case "saves":
+                return `http://localhost:8000/api/posts/saves/${userId}`
             default:
                 return "http://localhost:8000/api/posts/all"
         }
@@ -28,7 +30,7 @@ const Posts = ({ feedType, username, userId }) => {
         queryFn: async () => {
             try {
                 const res = await axios.get(POST_ENDPOINT);
-                const data = res.data;
+                const data = await res.data;
 
                 if (res.status !== 200) {
                     throw new Error(data.error || "Something went Wrong!")
