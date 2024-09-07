@@ -186,8 +186,6 @@ export const getSavedPosts = async (req, res) => {
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ error: "User Not Found!!" });
 
-        console.log("Posts in Saved Posts", user.savedPosts)
-
         const savedPosts = await Post.find({ _id: { $in: user.savedPosts } }).populate({
             path: "user",
             select: "-password",
