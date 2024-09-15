@@ -7,6 +7,7 @@ import LoadingSpinner from "./components/common/LoadSpinner.jsx";
 import Sidebar from "./components/common/SideBar.jsx";
 import { Fundamentals } from "./pages/widgets/news/Fundamentals.jsx";
 const LazyHome = lazy(() => import('./pages/home/Home.jsx'));
+const LazyLanding = lazy(() => import('./pages/Landing.jsx'));
 
 const LazyWidgets = lazy(() => import('./pages/widgets/Widgets.jsx'));
 const LazyCalendar = lazy(() => import('./pages/widgets/news/Calendar.jsx'));
@@ -57,9 +58,10 @@ function App() {
           {authUser && <Sidebar />}
           <Routes>
             {/* AuthRoutes */}
-            <Route path='/' element={<React.Suspense >{authUser ? <LazyHome /> : <Navigate to='/login' />}</React.Suspense>} />
-            <Route path='/login' element={<React.Suspense >{!authUser ? <LazyLogin /> : <Navigate to='/' />}</React.Suspense>} />
-            <Route path='/signup' element={<React.Suspense >{!authUser ? <LazySignUp /> : <Navigate to='/' />}</React.Suspense>} />
+            <Route path='/' element={<React.Suspense fallback={<LoadingSpinner />}>{<LazyLanding />}</React.Suspense>} />
+            <Route path='/home' element={<React.Suspense >{authUser ? <LazyHome /> : <Navigate to='/login' />}</React.Suspense>} />
+            <Route path='/login' element={<React.Suspense >{!authUser ? <LazyLogin /> : <Navigate to='/home' />}</React.Suspense>} />
+            <Route path='/signup' element={<React.Suspense >{!authUser ? <LazySignUp /> : <Navigate to='/home' />}</React.Suspense>} />
 
             {/* SideBar Routes */}
             <Route path="/widgets" element={<React.Suspense ><LazyWidgets /></React.Suspense>} />

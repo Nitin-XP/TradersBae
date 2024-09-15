@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { motion } from "framer-motion";
 import { logo } from "../../components/svgs/X";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -54,11 +55,20 @@ const LoginPage = () => {
     };
 
     return (
-        <div className='max-w-screen-xl mx-auto flex h-screen bg-slate-100'>
-            <div className='flex-1 hidden lg:flex items-center  justify-center'>
-                <img src={logo} className='lg:w-2/3 fill-white' />
-            </div>
-            <div className='flex-1 flex flex-col justify-center items-center'>
+        <div className='max-w-screen-xl mx-auto overflow-hidden flex h-screen bg-slate-100'>
+            <motion.div
+                initial={{ scale: 0.15, opacity: 0.4 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.19, type: 'spring', stiffness: 100 }}
+                className='flex-1 hidden lg:flex items-center  justify-center'>
+                <img src={logo} className='lg:w-2/3 bg-black rounded-full' />
+            </motion.div>
+
+            <motion.div
+                initial={{ x: 200, opacity: 0.4 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.09, type: 'spring', stiffness: 100 }}
+                className='flex-1 flex flex-col justify-center items-center'>
                 <form className='flex gap-4 flex-col' onSubmit={handleSubmit}>
                     <img src={logo} className='w-24 lg:hidden fill-white' />
                     <h1 className='text-4xl font-extrabold text-primary'>Welcome Back!😊</h1>
@@ -96,7 +106,7 @@ const LoginPage = () => {
                         <button className='btn rounded-full btn-primary text-white btn-outline w-full'>Sign up</button>
                     </Link>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };

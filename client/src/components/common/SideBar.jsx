@@ -42,7 +42,7 @@ const Sidebar = () => {
                 <ul className='flex flex-col gap-3 justify-center mt-4'>
                     <li className='flex justify-center md:justify-start'>
                         <Link
-                            to='/'
+                            to='/home'
                             className='flex gap-3 items-center text-secondary transition-all rounded-full duration-300 py-2 pl-2 pr-4 max-w-fit cursor-pointer'
                         >
                             <MdHomeFilled className='w-8 h-8 ' />
