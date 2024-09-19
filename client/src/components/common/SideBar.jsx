@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { motion } from "framer-motion";
 import React from "react";
 import toast from "react-hot-toast";
 import { BiLogOut } from "react-icons/bi";
@@ -34,7 +35,11 @@ const Sidebar = () => {
     const { data: authUser } = useQuery({ queryKey: ['authUser'] })
 
     return (
-        <div className='md:flex-[2_2_0] w-18 max-w-52 bg-[#012538]'>
+        <motion.div
+            initial={{ x: -200 }}
+            animate={{ x: 0, scale: 1, opacity: 1 }}
+            transition={{ delay: 0.09, duration: 0.7 }}
+            className='md:flex-[2_2_0] w-18 max-w-52 bg-[#012538]'>
             <div className='sticky top-0 left-0 h-screen flex flex-col border-r border-secondary w-20 md:w-full'>
                 <Link to='/' className='flex justify-center md:justify-start'>
                     <img src={logo} className='px-2 w-[130px] h-[120px] rounded-full fill-white ' />
@@ -103,7 +108,7 @@ const Sidebar = () => {
                     </Link>
                 )}
             </div>
-        </div>
+        </motion.div>
     );
 };
 export default Sidebar;

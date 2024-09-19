@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { motion } from "framer-motion";
 import React from "react";
 import { Link } from "react-router-dom";
 import useFollow from "../../hooks/useFollow";
@@ -28,7 +29,11 @@ const RightPanel = () => {
     if (suggestedUser?.length === 0) return <div className=" md:w-64 w-0"></div>
 
     return (
-        <div className='hidden lg:block homeBg3 '>
+        <motion.div
+            initial={{ x: 200 }}
+            animate={{ x: 0, scale: 1, opacity: 1 }}
+            transition={{ delay: 0.09, duration: 0.7 }}
+            className='hidden lg:block homeBg3 '>
             <div className=' bg-[#4D555B] p-4 rounded-md sticky top-1'>
                 <p className='font-bold text-center text-secondary'>Suggested for you</p>
                 <div className='flex mt-4 flex-col gap-4'>
@@ -76,7 +81,7 @@ const RightPanel = () => {
                         ))}
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 export default RightPanel;
