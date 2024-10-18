@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 
 const Calendar = () => {
@@ -32,16 +33,32 @@ const Calendar = () => {
     return (
         <div className='max-w-full flex flex-col justify-center p-4 font-serif widgetsBg'>
             <div className='py-2 lg:py-4 px-10 flex flex-col justify-center items-center'>
-                <h1 className='font-bold text-[20px] md:text-[25px] lg:text-[30px]'>Economic Calendar</h1>
-                <p className='pt-1 font-medium text-[10px] md:text-[15px] lg:text-[20px]'>
+                <motion.h1
+                    initial={{ y: "-10vw" }}
+                    animate={{ y: 0 }}
+                    transition={{ type: "spring", duration: 1.6, ease: "easeInOut" }}
+                    className='font-bold text-[20px] md:text-[25px] lg:text-[30px]'>Economic Calendar</motion.h1>
+                <motion.p
+                    initial={{ y: "10vw" }}
+                    animate={{ y: 0 }}
+                    transition={{ type: "spring", duration: 1.6, delay: 0.5, }}
+                    className='pt-1 font-medium text-[10px] md:text-[15px] lg:text-[20px]'>
                     Keep an eye on key upcoming economic events, announcements, and news. Plus, set up filters in a few clicks, selecting for event importance and affected currencies.
-                </p>
+                </motion.p>
             </div>
-            <p className='py-1 lg:py-4 px-10 mt-6 font-medium items-start text-[10px] md:text-[15px] lg:text-[20px]'>
+            <motion.p
+                initial={{ y: "10vw" }}
+                animate={{ y: 0 }}
+                transition={{ type: "spring", duration: 1.6, delay: 0.5, }}
+                className='py-1 lg:py-4 px-10 mt-6 font-medium items-start text-[10px] md:text-[15px] lg:text-[20px]'>
                 You can tap on Network Icon to see <span className='font-bold text-red-600'>High Impact News.</span>
-            </p>
+            </motion.p>
             <center>
-                <div className='w-full lg:w-[95%] px-10 bg-yellow-50 rounded-2xl'>
+                <motion.div
+                    initial={{ x: "100vw" }}
+                    animate={{ x: 0 }}
+                    transition={{ type: "spring", duration: 1.6, delay: 0.5, ease: "easeInOut" }}
+                    className='w-full lg:w-[95%] px-10 bg-yellow-50 rounded-2xl'>
                     <div className="tradingview-widget-container">
                         <div id="tradingview-events-widget" className="tradingview-widget-container__widget"></div>
                         <div className="tradingview-widget-copyright">
@@ -50,7 +67,7 @@ const Calendar = () => {
                             </a>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </center>
         </div>
     );

@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -65,7 +66,7 @@ function CustomDropdown({ asset, pairs, pair, handleChange }) {
 
     return (
         <div className="dropdown dropdown-hover" >
-            <div tabIndex={0} role="button" className="btn rounded-2xl m-1">
+            <div tabIndex={0} role="button" className="btn rounded-2xl hover:bg-black hover:text-white m-1">
                 {selectedLabel}
             </div>
             <ul tabIndex={0} className="dropdown-content menu bg-white rounded-[20px] z-[1] w-52 p-2 shadow">
@@ -116,17 +117,29 @@ const Chart = () => {
     return (
         <main className=' max-w-full w-full font-serif widgetsBg'>
             <div className=' my-4 flex flex-col justify-center items-center'>
-                <p className=' py-5 font-semibold text-[10px] md:text-[15px] lg:text-[20px] '>Choose the Chart From the DropDown!</p>
-                <div>
+                <motion.p
+                    initial={{ y: "-10vw" }}
+                    animate={{ y: 0 }}
+                    transition={{ type: "spring", duration: 1.6, delay: 0.5, ease: "easeInOut" }}
+                    className=' py-5 font-semibold text-[10px] md:text-[15px] lg:text-[20px] '>Choose the Chart From the DropDown!</motion.p>
+                <motion.div
+                    initial={{ y: "10vw" }}
+                    animate={{ y: 0 }}
+                    transition={{ type: "spring", duration: 1.6, delay: 0.5 }}
+                >
                     <CustomDropdown asset={"Forex Pairs"} pairs={pairs} pair={pair} handleChange={handleChange} />
                     <CustomDropdown asset={"Indices"} pairs={indices} pair={pair} handleChange={handleChange} />
                     <CustomDropdown asset={"Cryptos"} pairs={cryptos} pair={pair} handleChange={handleChange} />
 
-                </div>
+                </motion.div>
             </div>
-            <div className=' rounded-xl max-w-full w-full h-screen'>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 3, }}
+                className=' rounded-xl max-w-full w-full h-screen'>
                 <AdvancedChart pairName={pair} />
-            </div>
+            </motion.div>
         </main>
     )
 }
