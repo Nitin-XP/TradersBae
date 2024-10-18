@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { FaRegComment, FaRegHeart, FaTrash } from "react-icons/fa";
+import { FaBookmark, FaHeart, FaRegComment, FaTrash } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { formatPostDate } from "../../utils/date/index.js";
@@ -170,8 +170,8 @@ const Post = ({ post }) => {
                                 className='flex gap-1 items-center cursor-pointer group'
                                 onClick={() => document.getElementById("comments_modal" + post._id).showModal()}
                             >
-                                <FaRegComment className='w-4 h-4  text-slate-500 group-hover:text-sky-400' />
-                                <span className='text-sm text-slate-500 group-hover:text-sky-400'>
+                                <FaRegComment className='w-4 h-4  text-slate-500 group-hover:text-black' />
+                                <span className='text-sm text-slate-500 group-hover:text-black'>
                                     {post.comments.length}
                                 </span>
                             </div>
@@ -240,9 +240,9 @@ const Post = ({ post }) => {
                             <div className='flex gap-1 items-center group cursor-pointer' onClick={handleLikePost}>
                                 {isLiking && <LoadingSpinner size="md" />}
                                 {!isLiked && !isLiking && (
-                                    <FaRegHeart className='w-4 h-4 cursor-pointer text-slate-500 group-hover:text-pink-500' />
+                                    <FaHeart className='w-4 h-4 cursor-pointer text-slate-500 group-hover:text-pink-500' />
                                 )}
-                                {isLiked && !isLiking && <FaRegHeart className='w-4 h-4 cursor-pointer text-pink-500 ' />}
+                                {isLiked && !isLiking && <FaHeart className='w-4 h-4 cursor-pointer text-pink-500 ' />}
 
                                 <span
                                     className={`text-sm text-slate-500 group-hover:text-pink-500 ${isLiked ? "text-pink-500" : ""
@@ -256,9 +256,9 @@ const Post = ({ post }) => {
                         <div className='flex w-1/3 justify-end gap-2 items-center' onClick={handleSavePost}>
                             {isSaving && <LoadingSpinner size="md" />}
                             {!isSaved && !isSaving && (
-                                <FaRegBookmark className='w-4 h-4 text-slate-500 hover:text-black cursor-pointer' />
+                                <FaRegBookmark className='w-4 h-4 text-gray-500 hover:text-black cursor-pointer' />
                             )}
-                            {isSaved && !isSaving && <FaRegBookmark className='w-4 h-4 text-black cursor-pointer' />}
+                            {isSaved && !isSaving && <FaBookmark className='w-4 h-4 text-black cursor-pointer' />}
                         </div>
                     </div>
                 </div>

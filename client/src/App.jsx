@@ -54,7 +54,7 @@ function App() {
       <BrowserRouter>
         {/* <Navbar /> */}
         {/* max-w-6xl to max-w-full */}
-        <div className="flex max-w-full mx-auto bg-slate-100">
+        <div className="flex max-w-full mx-auto bg-slate-50">
           {authUser && <Sidebar />}
           <Routes>
             {/* AuthRoutes */}
