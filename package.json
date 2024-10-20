@@ -1,10 +1,10 @@
 {
-  "name": "project-3(trading-web)",
+  "name": "project-3trading-web",
   "version": "1.0.0",
   "description": "",
   "main": "backend/server.js",
   "scripts": {
-    "dev": "nodemon backend/server.js",
+    "dev": "set NODE_ENV=development && nodemon backend/server.js",
     "start": "node backend/server.js",
     "build": "npm install  && npm install --prefix client && npm run build --prefix client"
   },

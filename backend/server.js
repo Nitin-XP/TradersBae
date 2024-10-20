@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import path from "path";
 import connectMongoDb from "./db/connectMongoDB.js";
 import authRouter from "./routes/auth.js";
 import notificationRouter from "./routes/notification.js";
@@ -23,6 +24,7 @@ const corsOpts = {
     exposedHeaders: ["set-cookie"],
 }
 app.use(cors(corsOpts))
+const __dirname = path.resolve();
 
 app.use(express.json({ limit: '10mb' }));  // parsing req.body -> json
 app.use(express.urlencoded({ limit: '10mb', extended: true })); // Parses formdata
@@ -34,7 +36,15 @@ app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/notifications", notificationRouter);
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 9000;
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "/client/dist")));
+
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+    })
+}
 app.listen(PORT, () => {
     console.log(`Listening at port ${PORT}.`);
     connectMongoDb();
