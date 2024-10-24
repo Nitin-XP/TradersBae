@@ -5,9 +5,9 @@
   "main": "backend/server.js",
   "scripts": {
     "dev": "set NODE_ENV=development && nodemon backend/server.js",
-    "start": "node backend/server.js",
+    "start": "set NODE_ENV=production && node backend/server.js",
     "build": "npm install && cd client && npm install && npm run build",
-    "render-postbuild": "npm install client --production=false && cd client && npm run build"
+    "render-postbuild": "npm install client && cd client && npm run build"
   },
   "keywords": [],
   "author": "",
