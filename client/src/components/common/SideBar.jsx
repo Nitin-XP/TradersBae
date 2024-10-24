@@ -8,6 +8,7 @@ import { FaUser } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 import { MdHomeFilled, MdWidgets } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { BASE_URL } from "../../Constants/constant";
 import "../../styles.css";
 import { logo } from "../svgs/X";
 
@@ -17,7 +18,7 @@ const Sidebar = () => {
     const { mutate: logout } = useMutation({
         mutationFn: async () => {
             try {
-                const res = await axios.post("http://localhost:8000/api/auth/logout");
+                const res = await axios.post(BASE_URL + "/api/auth/logout");
                 if (res.status !== 200) throw new Error(res.data.error || "Something Went Wrong!!");
             } catch (error) {
                 throw new Error(error.response?.data?.error || error.message);

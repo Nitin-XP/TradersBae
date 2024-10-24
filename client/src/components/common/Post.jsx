@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 import { FaBookmark, FaHeart, FaRegComment, FaTrash } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { BASE_URL } from "../../Constants/constant.js";
 import { formatPostDate } from "../../utils/date/index.js";
 import LoadingSpinner from "./LoadSpinner";
 
@@ -25,7 +26,7 @@ const Post = ({ post }) => {
     const { mutate: deletePost, isPending: isDeleting } = useMutation({
         mutationFn: async () => {
             try {
-                const res = await axios.post(`http://localhost:8000/api/posts/${post._id}`);
+                const res = await axios.post(BASE_URL + `/api/posts/${post._id}`);
                 const data = res.data;
 
                 if (res.status !== 200) throw new Error(data.error || "Something Went Wrong!!");
@@ -44,7 +45,7 @@ const Post = ({ post }) => {
     const { mutate: likePost, isPending: isLiking } = useMutation({
         mutationFn: async () => {
             try {
-                const res = await axios.post(`http://localhost:8000/api/posts/like/${post._id}`);
+                const res = await axios.post(BASE_URL + `/api/posts/like/${post._id}`);
                 const data = res.data;
 
                 if (res.status !== 200) throw new Error(data.error || "Something Went Wrong!!");
@@ -70,7 +71,7 @@ const Post = ({ post }) => {
     const { mutate: commentPost, isPending: isCommenting } = useMutation({
         mutationFn: async () => {
             try {
-                const res = await axios.post(`http://localhost:8000/api/posts/comments/${post._id}`, { text: comment });
+                const res = await axios.post(BASE_URL + `/api/posts/comments/${post._id}`, { text: comment });
                 const data = res.data;
 
                 if (res.status !== 200) throw new Error(data.error || "Something Went Wrong!!");
@@ -93,7 +94,7 @@ const Post = ({ post }) => {
     const { mutate: savePost, isPending: isSaving } = useMutation({
         mutationFn: async () => {
             try {
-                const res = await axios.post(`http://localhost:8000/api/posts/save/${post._id}`);
+                const res = await axios.post(BASE_URL + `/api/posts/save/${post._id}`);
                 const data = await res.data;
                 if (res.status !== 200) throw new Error(data.error || "Something Went Wrong!!");
                 return data;

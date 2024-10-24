@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { BsEmojiSmileFill } from "react-icons/bs";
 import { CiImageOn } from "react-icons/ci";
 import { IoCloseSharp } from "react-icons/io5";
+import { BASE_URL } from "../../Constants/constant";
 
 const CreatePost = () => {
     const [text, setText] = useState("");
@@ -21,7 +22,7 @@ const CreatePost = () => {
         mutationFn: async ({ text, img }) => {
             const details = { text, img };
             try {
-                const res = await axios.post("http://localhost:8000/api/posts/create", details);
+                const res = await axios.post(BASE_URL + "/api/posts/create", details);
                 const data = res.data;
 
                 if (res.status !== 200) throw new Error(data.error || "Something Went Wrong!!");

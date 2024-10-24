@@ -3,6 +3,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import React from "react";
 import { Link } from "react-router-dom";
+import { BASE_URL } from "../../Constants/constant";
 import useFollow from "../../hooks/useFollow";
 import "../../styles.css";
 import RightPanelSkeleton from "../skeletons/RightPanelSkeleton";
@@ -13,7 +14,7 @@ const RightPanel = () => {
         queryKey: ['suggestedUser'],
         queryFn: async () => {
             try {
-                const res = await axios.get("http://localhost:8000/api/users/suggested");
+                const res = await axios.get(BASE_URL + "/api/users/suggested");
                 const data = res.data;
 
                 if (res.status !== 200) throw new Error(data.error || "Something Went Wrong!!");

@@ -16,3 +16,7 @@ export const navlinks = [
         link: "https://portfolio-of-nitin.netlify.app/",
     },
 ]
+
+const DEV_URL = "http://localhost:8000";
+const PROD_URL = "";
+export const BASE_URL = DEV_URL;

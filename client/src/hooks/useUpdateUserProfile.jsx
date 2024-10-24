@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { BASE_URL } from '../Constants/constant';
 
 const useUpdateUserProfile = () => {
     const queryClient = useQueryClient();
@@ -8,7 +9,7 @@ const useUpdateUserProfile = () => {
     const { mutateAsync: updateProfile, isPending: isUpdatingProfile } = useMutation({
         mutationFn: async (formData) => {
             try {
-                const res = await axios.post(`http://localhost:8000/api/users/update/`, formData);
+                const res = await axios.post(BASE_URL + `/api/users/update/`, formData);
                 const data = res.data;
 
                 if (res.status !== 200) throw new Error(data.error || `Something Went Wrong!`);

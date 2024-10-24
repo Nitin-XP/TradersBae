@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import LoadingSpinner from "./components/common/LoadSpinner.jsx";
 import Sidebar from "./components/common/SideBar.jsx";
+import { BASE_URL } from "./Constants/constant.js";
 import { Fundamentals } from "./pages/widgets/news/Fundamentals.jsx";
 const LazyHome = lazy(() => import('./pages/home/Home.jsx'));
 const LazyLanding = lazy(() => import('./pages/Landing.jsx'));
@@ -24,11 +25,12 @@ const LazyProfilePage = lazy(() => import('./pages/profile/ProfilePage.jsx'));
 axios.defaults.withCredentials = true
 
 function App() {
+  console.log(`${BASE_URL}`);
   const { data: authUser, isLoading } = useQuery({
     queryKey: ['authUser'],
     queryFn: async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/auth/me"); // causing problem
+        const res = await axios.get(BASE_URL + "/api/auth/me"); // causing problem
         const data = res.data;
         if (data.error) return null;
         if (res.status !== 200) throw new Error(data.error || "Something Went Wrong!!");
