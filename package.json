@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "set NODE_ENV=development && nodemon backend/server.js",
     "start": "node backend/server.js",
-    "build": "npm install && cd client && npm install && npm run build"
+    "render-postbuild": "npm install --prefix client --production=false && cd /opt/render/project/src/client && npm run build",
+    "install": "npm --prefix backend install backend && npm --prefix client install client",
+    "sequelize": "npm run --prefix backend sequelize",
+    "sequelize-cli": "npm run --prefix backend sequelize-cli",
+    "build": "npm run build --prefix backend"
   },
   "keywords": [],
   "author": "",
