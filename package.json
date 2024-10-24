@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "set NODE_ENV=development && nodemon backend/server.js",
     "start": "node backend/server.js",
-    "build": "npm install && cd client && npm install  --production=false && npm run build"
+    "build": "npm install --production=false && cd client && npm install --production=false && npm run build"
   },
   "keywords": [],
   "author": "",
