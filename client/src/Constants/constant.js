@@ -17,6 +17,6 @@ export const navlinks = [
     },
 ]
 
-const PRODUCTION_URL = "https://tradersbae-768v.onrender.com"
-const DEVELOPMENT_URL = "http://localhost:8000"
-export const BASE_URL = PRODUCTION_URL;
+const DEVELOPMENT_URL = "http://localhost:8000";
+const PRODUCTION_URL = "";
+export const BASE_URL = DEVELOPMENT_URL;

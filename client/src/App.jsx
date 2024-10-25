@@ -25,6 +25,7 @@ const LazyProfilePage = lazy(() => import('./pages/profile/ProfilePage.jsx'));
 axios.defaults.withCredentials = true
 
 function App() {
+  console.log(`${BASE_URL}`);
   const { data: authUser, isLoading } = useQuery({
     queryKey: ['authUser'],
     queryFn: async () => {
