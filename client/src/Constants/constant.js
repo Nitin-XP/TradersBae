@@ -17,6 +17,6 @@ export const navlinks = [
     },
 ]
 
-const DEV_URL = "http://localhost:8000";
-const PROD_URL = "";
-export const BASE_URL = DEV_URL;
+const DEVELOPMENT_URL = "http://localhost:8000";
+const PRODUCTION_URL = "";
+export const BASE_URL = DEVELOPMENT_URL;
