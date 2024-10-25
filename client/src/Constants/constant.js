@@ -16,3 +16,7 @@ export const navlinks = [
         link: "https://portfolio-of-nitin.netlify.app/",
     },
 ]
+
+const PRODUCTION_URL = "https://tradersbae-768v.onrender.com"
+const DEVELOPMENT_URL = "http://localhost:8000"
+export const BASE_URL = PRODUCTION_URL;

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useEffect } from "react";
+import { BASE_URL } from "../../Constants/constant";
 import PostSkeleton from "../skeletons/PostSkeleton";
 import Post from "./Post";
 
@@ -9,17 +10,17 @@ const Posts = ({ feedType, username, userId }) => {
     const getPostEndpoint = () => {
         switch (feedType) {
             case "forYou":
-                return "http://localhost:8000/api/posts/all";
+                return BASE_URL + "/api/posts/all";
             case "following":
-                return "http://localhost:8000/api/posts/following";
+                return BASE_URL + "/api/posts/following";
             case "posts":
-                return `http://localhost:8000/api/posts/user/${username}`
+                return BASE_URL + `/api/posts/user/${username}`
             case "likes":
-                return `http://localhost:8000/api/posts/likes/${userId}`
+                return BASE_URL + `/api/posts/likes/${userId}`
             case "saves":
-                return `http://localhost:8000/api/posts/saves/${userId}`
+                return BASE_URL + `/api/posts/saves/${userId}`
             default:
-                return "http://localhost:8000/api/posts/all"
+                return BASE_URL + "/api/posts/all"
         }
     }
 

@@ -7,6 +7,7 @@ import { FaHeart } from "react-icons/fa6";
 import { IoSettingsOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "../../components/common/LoadSpinner";
+import { BASE_URL } from "../../Constants/constant";
 
 const NotificationPage = () => {
 
@@ -16,7 +17,7 @@ const NotificationPage = () => {
         queryKey: ['notifications'],
         queryFn: async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/api/notifications`);
+                const res = await axios.get(BASE_URL + `/api/notifications`);
                 const data = res.data;
 
                 if (res.status !== 200) throw new Error(data.error || "Something Went Wrong!!");
@@ -31,7 +32,7 @@ const NotificationPage = () => {
     const { mutate: deleteNotifications } = useMutation({
         mutationFn: async () => {
             try {
-                const res = await axios.delete(`http://localhost:8000/api/notifications`);
+                const res = await axios.delete(BASE_URL + `/api/notifications`);
                 const data = res.data;
 
                 if (res.status !== 200) throw new Error(data.error || "Something Went Wrong!!");

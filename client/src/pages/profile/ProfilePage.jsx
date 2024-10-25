@@ -14,6 +14,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
 import RightPanel from "../../components/common/RightPanel";
+import { BASE_URL } from "../../Constants/constant";
 import useFollow from "../../hooks/useFollow";
 import useUpdateUserProfile from "../../hooks/useUpdateUserProfile";
 import { formatMemberSinceDate } from "../../utils/date";
@@ -36,7 +37,7 @@ const ProfilePage = () => {
         queryKey: ['userProfile'],
         queryFn: async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/api/users/profile/${username}`);
+                const res = await axios.get(BASE_URL + `/api/users/profile/${username}`);
                 const data = res.data;
                 if (res.status !== 200) throw new Error(data.error || `Something Went Wrong!`);
                 return data;

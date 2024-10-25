@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { FaUser } from "react-icons/fa";
 import { MdDriveFileRenameOutline, MdOutlineMail, MdPassword } from "react-icons/md";
+import { BASE_URL } from "../../Constants/constant";
 
 const SignUpPage = () => {
     const [formData, setFormData] = useState({
@@ -21,7 +22,7 @@ const SignUpPage = () => {
         mutationFn: async ({ email, username, fullname, password }) => {
 
             try {
-                const res = await fetch("http://localhost:8000/api/auth/signup", {
+                const res = await fetch(BASE_URL + "/api/auth/signup", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

@@ -7,6 +7,7 @@ import { logo } from "../../components/svgs/X";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { MdOutlineMail, MdPassword } from "react-icons/md";
+import { BASE_URL } from "../../Constants/constant";
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ const LoginPage = () => {
         mutationFn: async ({ username, password }) => {
 
             try {
-                const res = await axios.post("http://localhost:8000/api/auth/login", {
+                const res = await axios.post(BASE_URL + "/api/auth/login", {
                     username,
                     password
                 }, {
