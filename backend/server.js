@@ -19,7 +19,7 @@ cloudinary.config({
 
 const app = express();
 const corsOpts = {
-    origin: ["http://localhost:5000", "http://localhost:8000"],
+    origin: ["http://localhost:5000", "http://localhost:8000", "https://tradersbae-768v.onrender.com"],
     credentials: true,
     exposedHeaders: ["set-cookie"],
 }
