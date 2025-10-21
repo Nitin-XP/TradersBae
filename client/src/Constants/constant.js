@@ -19,4 +19,4 @@ export const navlinks = [
 
 const DEVELOPMENT_URL = "http://localhost:8000";
 const PRODUCTION_URL = "https://traders-bae-api.vercel.app";
-export const BASE_URL = PRODUCTION_URL;
+export const BASE_URL = DEVELOPMENT_URL;
